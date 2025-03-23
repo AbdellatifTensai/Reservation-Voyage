@@ -4,19 +4,24 @@
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
              version="3.0">
 
-    <persistence-unit name="gestionproduits" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="ReservationVoyage" transaction-type="RESOURCE_LOCAL">
 
         <provider>org.hibernate.jpa.HibernatePersistenceProvider </provider>
 
         <properties>
-            <property name="hibernate.archive.autodetection" value="class"/>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ReservationVoyage"/>
             <property name="jakarta.persistence.jdbc.user" value="root"/>
             <property name="jakarta.persistence.jdbc.password" value=""/>
+
+            <property name="hibernate.archive.autodetection" value="class"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true" />
+            <property name="hibernate.use_sql_comments" value="true" /> 
+            <property name="hibernate.jdbc.batch_size" value="0" />
+
         </properties>
 
     </persistence-unit>

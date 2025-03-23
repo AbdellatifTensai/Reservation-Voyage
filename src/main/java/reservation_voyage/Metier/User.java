@@ -5,15 +5,14 @@ import lombok.Data;
 
 @Data
 @Entity
-public class Reservation {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String passengerName;
-    private String seatNumber;
+    private String username;
+    private String password;
 
-    @ManyToOne
-    @JoinColumn(name = "train_id", nullable = false)
-    private Train train;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }
