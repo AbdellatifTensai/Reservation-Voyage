@@ -7,7 +7,7 @@ package.json
 README.md
 
 test
-target
+target/
 
 .vscode
 
