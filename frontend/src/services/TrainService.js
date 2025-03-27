@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = "http://localhost:8080";
+const API_BASE_URL = "http://localhost:8080/api";
 
 export const addTrain = async (train) => {
   return await axios.post(`${API_BASE_URL}/trains`, train);

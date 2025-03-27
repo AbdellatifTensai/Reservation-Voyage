@@ -1,0 +1,13 @@
+services:
+  app:
+    build: .
+    ports:
+      - 8080:8080
+    
+  db:
+    image: mysql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+      MYSQL_DATABASE: ReservationVoyage
+    ports:
+      - 3306:3306
