@@ -48,18 +48,12 @@ Le système suit le modèle architectural Modèle-Vue-Contrôleur (MVC) :
 │   │   └── ...
 
 └── uml-diagrams/             # Documentation UML
-
-    ├── use-case-diagram.txt          # Interactions utilisateur avec le système
-    
-    ├── class-diagram.txt             # Structure et relations du système
-    
-    ├── frontend-component-diagram.txt# Architecture des composants React
-    
-    ├── sequence-diagram.txt          # Flux de réservation utilisateur
-    
-    ├── admin-sequence-diagram.txt    # Flux de travail administrateur
-    
-    └── README.md                     # Documentation des diagrammes
+    ├── use-case-diagram.puml           # Interactions utilisateur avec le système
+    ├── class-diagram.puml              # Structure et relations du système
+    ├── frontend-component-diagram.puml # Architecture des composants React
+    ├── sequence-diagram.puml           # Flux de réservation utilisateur 
+    ├── admin-sequence-diagram.puml     # Flux de travail administrateur
+    └── README.md                      # Documentation des diagrammes
     
 
 ## Documentation
