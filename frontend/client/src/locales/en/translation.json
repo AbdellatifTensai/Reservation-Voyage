@@ -1,0 +1,127 @@
+{
+  "app": {
+    "name": "TrainEase",
+    "adminName": "TrainEase Admin",
+    "slogan": "Your journey, simplified",
+    "tagline": "Your journey, simplified"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "username": "Username",
+    "password": "Password",
+    "fullName": "Full name",
+    "confirmPassword": "Confirm password",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "signIn": "Sign in",
+    "signingIn": "Signing in...",
+    "createAccount": "Create account",
+    "creatingAccount": "Creating account...",
+    "usernamePlaceholder": "Your username",
+    "passwordPlaceholder": "Your password",
+    "fullNamePlaceholder": "John Doe",
+    "chooseUsernamePlaceholder": "Choose a username",
+    "confirmPasswordPlaceholder": "Confirm your password"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "findTickets": "Find Tickets",
+    "myBookings": "My Bookings",
+    "manageTrains": "Manage Trains",
+    "manageRoutes": "Manage Routes",
+    "manageUsers": "Manage Users",
+    "logout": "Logout"
+  },
+  "findTickets": {
+    "title": "Find Tickets",
+    "searchHeader": "Search for your next journey",
+    "searchDescription": "Enter your departure and destination cities to find available trains and book your tickets."
+  },
+  "trains": {
+    "searchFilters": "Search Filters",
+    "origin": "Origin",
+    "destination": "Destination",
+    "date": "Date",
+    "search": "Search",
+    "reset": "Reset",
+    "noTrains": "No trains found for the selected criteria.",
+    "trainNumber": "Train Number",
+    "trainName": "Train Name",
+    "departureTime": "Departure Time",
+    "arrivalTime": "Arrival Time",
+    "duration": "Duration",
+    "price": "Price",
+    "actions": "Actions",
+    "book": "Book",
+    "hours": "hours",
+    "minutes": "minutes"
+  },
+  "bookings": {
+    "title": "My Bookings",
+    "noBookings": "You don't have any bookings yet.",
+    "bookingId": "Booking ID",
+    "status": "Status",
+    "date": "Date",
+    "route": "Route",
+    "train": "Train",
+    "departureTime": "Departure Time",
+    "cancel": "Cancel",
+    "view": "View Details",
+    "confirmCancel": "Are you sure you want to cancel this booking?",
+    "yes": "Yes, Cancel",
+    "no": "No, Keep It"
+  },
+  "userDashboard": {
+    "title": "User Dashboard",
+    "welcomeBack": "Welcome back",
+    "upcomingTrips": "Upcoming Trips",
+    "quickActions": "Quick Actions",
+    "findNewTicket": "Find New Ticket",
+    "viewBookings": "View My Bookings",
+    "editProfile": "Edit Profile"
+  },
+  "adminDashboard": {
+    "title": "Admin Dashboard",
+    "welcomeBack": "Welcome back",
+    "systemOverview": "System Overview",
+    "totalUsers": "Total Users",
+    "totalTrains": "Total Trains",
+    "totalRoutes": "Total Routes",
+    "totalBookings": "Total Bookings",
+    "quickActions": "Quick Actions",
+    "manageTrains": "Manage Trains",
+    "manageRoutes": "Manage Routes",
+    "manageUsers": "Manage Users"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add",
+    "search": "Search",
+    "filter": "Filter",
+    "noResults": "No results found",
+    "confirm": "Confirm",
+    "success": "Success",
+    "goBack": "Go Back",
+    "continue": "Continue"
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "message": "The page you are looking for does not exist.",
+    "backHome": "Back to Home"
+  },
+  "language": {
+    "english": "English",
+    "french": "French"
+  },
+  "backendSelector": {
+    "title": "Backend Selection",
+    "description": "Choose which backend implementation to use for API requests.",
+    "currentBackend": "Current backend"
+  }
+}

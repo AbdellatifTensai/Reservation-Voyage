@@ -1,0 +1,69 @@
+pipeline {
+    agent any
+    
+    tools {
+        maven 'Maven 3'
+        jdk 'JDK 17'
+    }
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        
+        stage('Build & Test Java Backend') {
+            steps {
+                dir('java-backend') {
+                    sh 'mvn clean test'
+                }
+            }
+            post {
+                always {
+                    junit 'java-backend/target/surefire-reports/*.xml'
+                }
+                success {
+                    jacoco(
+                        execPattern: 'java-backend/target/jacoco.exec',
+                        classPattern: 'java-backend/target/classes',
+                        sourcePattern: 'java-backend/src/main/java',
+                        exclusionPattern: 'java-backend/src/test*'
+                    )
+                }
+            }
+        }
+        
+        stage('Generate Test Reports') {
+            steps {
+                dir('java-backend') {
+                    sh 'mvn site -DgenerateReports=false'
+                }
+            }
+            post {
+                success {
+                    archiveArtifacts artifacts: 'java-backend/target/site/**', fingerprint: false
+                    publishHTML([
+                        allowMissing: false,
+                        alwaysLinkToLastBuild: true,
+                        keepAll: true,
+                        reportDir: 'java-backend/target/site',
+                        reportFiles: 'index.html',
+                        reportName: 'Java Test Reports'
+                    ])
+                }
+            }
+        }
+    }
+    
+    post {
+        success {
+            echo 'Java backend tests passed!'
+            slackSend(color: 'good', message: "Java backend tests PASSED: ${env.JOB_NAME} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+        }
+        failure {
+            echo 'Java backend tests failed!'
+            slackSend(color: 'danger', message: "Java backend tests FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+        }
+    }
+}

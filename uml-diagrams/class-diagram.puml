@@ -1,0 +1,297 @@
+@startuml TrainEase Class Diagram
+
+' Style settings
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam monochrome false
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam linetype ortho
+skinparam rankdir top-to-bottom
+
+' -----------------------------------------------------------
+' PRESENTATION LAYER
+' -----------------------------------------------------------
+package "com.trainease.controller" #LightBlue {
+    class UserController {
+        - userService: UserService
+        + getAllUsers(): Response
+        + getUserById(id: Long): Response
+        + registerUser(userDTO: UserDTO): Response
+        + login(loginRequest: LoginRequest): Response
+        + logout(): Response
+        + getCurrentUser(): Response
+        + updateUser(id: Long, userDTO: UserDTO): Response
+        + deleteUser(id: Long): Response
+        - convertToDTO(user: User): UserDTO
+        - convertToEntity(dto: UserDTO): User
+    }
+    
+    class TrainController {
+        - trainService: TrainService
+        + getAllTrains(): Response
+        + getTrainById(id: Long): Response
+        + createTrain(trainDTO: TrainDTO): Response
+        + updateTrain(id: Long, trainDTO: TrainDTO): Response
+        + deleteTrain(id: Long): Response
+        - convertToDTO(train: Train): TrainDTO
+        - convertToEntity(dto: TrainDTO): Train
+    }
+    
+    class RouteController {
+        - routeService: RouteService
+        + getAllRoutes(): Response
+        + getRouteById(id: Long): Response
+        + createRoute(routeDTO: RouteDTO): Response
+        + updateRoute(id: Long, routeDTO: RouteDTO): Response
+        + deleteRoute(id: Long): Response
+        - convertToDTO(route: Route): RouteDTO
+        - convertToEntity(dto: RouteDTO): Route
+    }
+    
+    class BookingController {
+        - bookingService: BookingService
+        + getAllBookings(): Response
+        + getBookingsByUser(): Response
+        + getBookingById(id: Long): Response
+        + createBooking(bookingDTO: BookingDTO): Response
+        + updateBooking(id: Long, bookingDTO: BookingDTO): Response
+        + cancelBooking(id: Long): Response
+        - convertToDTO(booking: Booking): BookingDTO
+        - convertToEntity(dto: BookingDTO): Booking
+    }
+}
+
+' -----------------------------------------------------------
+' DTO LAYER
+' -----------------------------------------------------------
+package "com.trainease.dto" #LightPink {
+    class UserDTO {
+        - id: Long
+        - username: String
+        - password: String
+        - fullName: String
+        - isAdmin: boolean
+        + getters() 
+        + setters()
+    }
+    
+    class LoginRequest {
+        - username: String
+        - password: String
+        + getters() 
+        + setters()
+    }
+    
+    class TrainDTO {
+        - id: Long
+        - name: String
+        - capacity: int
+        - type: String
+        + getters() 
+        + setters()
+    }
+    
+    class RouteDTO {
+        - id: Long
+        - origin: String
+        - destination: String
+        - duration: int
+        - departureTime: String
+        - arrivalTime: String
+        - price: double
+        + getters() 
+        + setters()
+    }
+    
+    class BookingDTO {
+        - id: Long
+        - userId: Long
+        - trainId: Long
+        - routeId: Long
+        - departureTime: Date
+        - bookingDate: Date
+        - journeyDate: Date
+        - seats: int
+        - status: String
+        + getters() 
+        + setters()
+    }
+}
+
+' -----------------------------------------------------------
+' SERVICE LAYER
+' -----------------------------------------------------------
+package "com.trainease.service" #LightGreen {
+    interface UserService {
+        + getAllUsers(): List<User>
+        + getUserById(id: Long): Optional<User>
+        + getUserByUsername(username: String): Optional<User>
+        + createUser(user: User): User
+        + updateUser(user: User): User
+        + deleteUser(id: Long): boolean
+        + authenticate(username: String, password: String): boolean
+    }
+    
+    interface TrainService {
+        + getAllTrains(): List<Train>
+        + getTrainById(id: Long): Optional<Train>
+        + createTrain(train: Train): Train
+        + updateTrain(train: Train): Train
+        + deleteTrain(id: Long): boolean
+    }
+    
+    interface RouteService {
+        + getAllRoutes(): List<Route>
+        + getRouteById(id: Long): Optional<Route>
+        + createRoute(route: Route): Route
+        + updateRoute(route: Route): Route
+        + deleteRoute(id: Long): boolean
+    }
+    
+    interface BookingService {
+        + getAllBookings(): List<Booking>
+        + getBookingsByUserId(userId: Long): List<Booking>
+        + getBookingById(id: Long): Optional<Booking>
+        + createBooking(booking: Booking): Booking
+        + updateBooking(booking: Booking): Booking
+        + cancelBooking(id: Long): boolean
+    }
+}
+
+' -----------------------------------------------------------
+' SERVICE IMPLEMENTATION LAYER
+' -----------------------------------------------------------
+package "com.trainease.service.impl" #LightYellow {
+    class UserServiceImpl implements UserService {
+        - userRepository: UserRepository
+        + getAllUsers(): List<User>
+        + getUserById(id: Long): Optional<User>
+        + getUserByUsername(username: String): Optional<User>
+        + createUser(user: User): User
+        + updateUser(user: User): User
+        + deleteUser(id: Long): boolean
+        + authenticate(username: String, password: String): boolean
+        - hashPassword(password: String): String
+        - verifyPassword(rawPassword: String, hashedPassword: String): boolean
+    }
+    
+    class TrainServiceImpl implements TrainService {
+        - trainRepository: TrainRepository
+        + getAllTrains(): List<Train>
+        + getTrainById(id: Long): Optional<Train>
+        + createTrain(train: Train): Train
+        + updateTrain(train: Train): Train
+        + deleteTrain(id: Long): boolean
+    }
+    
+    class RouteServiceImpl implements RouteService {
+        - routeRepository: RouteRepository
+        + getAllRoutes(): List<Route>
+        + getRouteById(id: Long): Optional<Route>
+        + createRoute(route: Route): Route
+        + updateRoute(route: Route): Route
+        + deleteRoute(id: Long): boolean
+    }
+    
+    class BookingServiceImpl implements BookingService {
+        - bookingRepository: BookingRepository
+        - userRepository: UserRepository
+        - trainRepository: TrainRepository
+        - routeRepository: RouteRepository
+        + getAllBookings(): List<Booking>
+        + getBookingsByUserId(userId: Long): List<Booking>
+        + getBookingById(id: Long): Optional<Booking>
+        + createBooking(booking: Booking): Booking
+        + updateBooking(booking: Booking): Booking
+        + cancelBooking(id: Long): boolean
+        - validateBooking(booking: Booking): void
+    }
+}
+
+' -----------------------------------------------------------
+' ENTITY LAYER
+' -----------------------------------------------------------
+package "com.trainease.entity" #LightGrey {
+    class User {
+        - id: Long
+        - username: String
+        - password: String
+        - fullName: String
+        - isAdmin: boolean
+        + getters() 
+        + setters()
+    }
+    
+    class Train {
+        - id: Long
+        - name: String
+        - capacity: int
+        - type: String
+        + getters() 
+        + setters()
+    }
+    
+    class Route {
+        - id: Long
+        - origin: String
+        - destination: String
+        - duration: int
+        - departureTime: String
+        - arrivalTime: String
+        - price: double
+        + getters() 
+        + setters()
+    }
+    
+    class Booking {
+        - id: Long
+        - userId: Long
+        - trainId: Long
+        - routeId: Long
+        - departureTime: Date
+        - bookingDate: Date
+        - journeyDate: Date
+        - seats: int
+        - status: String
+        + getters() 
+        + setters()
+    }
+}
+
+' -----------------------------------------------------------
+' RELATIONSHIPS
+' -----------------------------------------------------------
+
+' Vertical flow of layers
+UserController --> UserService
+TrainController --> TrainService
+RouteController --> RouteService
+BookingController --> BookingService
+
+UserService --> UserServiceImpl
+TrainService --> TrainServiceImpl
+RouteService --> RouteServiceImpl
+BookingService --> BookingServiceImpl
+
+UserServiceImpl --> User
+TrainServiceImpl --> Train
+RouteServiceImpl --> Route
+BookingServiceImpl --> Booking
+BookingServiceImpl --> User
+BookingServiceImpl --> Train
+BookingServiceImpl --> Route
+
+' Entity relationships
+User "1" -- "0..*" Booking : has
+Train "1" -- "0..*" Booking : used in 
+Route "1" -- "0..*" Booking : booked for
+
+' DTO relationships
+UserController --> UserDTO : uses
+TrainController --> TrainDTO : uses
+RouteController --> RouteDTO : uses
+BookingController --> BookingDTO : uses
+UserController --> LoginRequest : uses
+
+@enduml

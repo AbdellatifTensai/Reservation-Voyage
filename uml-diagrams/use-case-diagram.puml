@@ -1,0 +1,64 @@
+@startuml TrainEase Use Case Diagram
+
+skinparam actorStyle awesome
+skinparam packageStyle rectangle
+skinparam usecaseStyle roundbox
+
+' Actors
+actor "Regular User" as RegularUser
+actor "Administrator" as Admin
+
+' System
+rectangle "TrainEase - Train Ticket Reservation System" {
+    ' Authentication Use Cases
+    usecase "Register Account" as UC_Register
+    usecase "Login" as UC_Login
+    usecase "Logout" as UC_Logout
+    
+    ' Regular User Use Cases
+    usecase "View Available Trains" as UC_ViewTrains
+    usecase "Search for Routes" as UC_SearchRoutes
+    usecase "Book Tickets" as UC_BookTickets
+    usecase "View Bookings" as UC_ViewBookings
+    usecase "Cancel Booking" as UC_CancelBooking
+    usecase "Make Payment" as UC_MakePayment
+    
+    ' Admin Use Cases
+    usecase "Manage Users" as UC_ManageUsers
+    usecase "Add/Edit/Delete Users" as UC_CRUDUsers
+    usecase "Toggle Admin Status" as UC_ToggleAdmin
+    usecase "Manage Trains" as UC_ManageTrains
+    usecase "Add/Edit/Delete Trains" as UC_CRUDTrains
+    usecase "Manage Routes" as UC_ManageRoutes
+    usecase "Add/Edit/Delete Routes" as UC_CRUDRoutes
+}
+
+' Relationships - Regular User
+RegularUser --> UC_Register
+RegularUser --> UC_Login
+RegularUser --> UC_Logout
+RegularUser --> UC_ViewTrains
+RegularUser --> UC_SearchRoutes
+RegularUser --> UC_BookTickets
+RegularUser --> UC_ViewBookings
+RegularUser --> UC_CancelBooking
+RegularUser --> UC_MakePayment
+
+' Relationships - Admin
+Admin --> UC_Login
+Admin --> UC_Logout
+Admin --> UC_ManageUsers
+Admin --> UC_ManageTrains
+Admin --> UC_ManageRoutes
+
+' Extensions and Inclusions
+UC_ManageUsers ..> UC_CRUDUsers : <<include>>
+UC_ManageUsers ..> UC_ToggleAdmin : <<include>>
+UC_ManageTrains ..> UC_CRUDTrains : <<include>>
+UC_ManageRoutes ..> UC_CRUDRoutes : <<include>>
+UC_BookTickets ..> UC_MakePayment : <<include>>
+
+' Inherit Admin from Regular User
+Admin --|> RegularUser
+
+@enduml

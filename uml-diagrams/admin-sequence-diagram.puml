@@ -1,0 +1,152 @@
+@startuml TrainEase Admin Sequence Diagram
+
+' Style settings
+skinparam sequenceArrowThickness 2
+skinparam roundcorner 20
+skinparam sequenceParticipant underline
+
+' Participants in the Admin flow
+actor "Admin" as Admin
+participant "React\nFrontend\n(View)" as View
+participant "HTTP Controller\n(Controller)" as Controller
+participant "Service Layer\n(Controller)" as Service
+participant "Entity/Repository\n(Model)" as Model
+database "Database" as DB
+
+' Admin Workflow Sequence
+title Admin Management Workflow - Sequence Diagram
+
+' Admin Login
+Admin -> View: Navigate to /auth
+View -> View: Display Login Form
+Admin -> View: Enter admin credentials
+View -> Controller: POST /api/login
+Controller -> Service: authenticate(username, password)
+Service -> Model: getUserByUsername(username)
+Model -> DB: SELECT * FROM users WHERE username = ?
+DB --> Model: Return user data
+Model --> Service: Return User object
+Service -> Service: Verify password
+Service -> Service: Check isAdmin flag
+Service --> Controller: Return authentication result
+Controller -> Controller: Create session
+Controller --> View: Return user data with admin flag
+View -> View: Store user in AuthContext
+View -> View: Redirect to Admin Dashboard
+
+' Admin Dashboard View
+Admin -> View: Navigate to /admin-dashboard
+View -> View: Display Admin Dashboard with options
+
+' Manage Routes
+Admin -> View: Navigate to /manage-routes
+View -> Controller: GET /api/routes
+Controller -> Service: getAllRoutes()
+Service -> Model: findAll()
+Model -> DB: SELECT * FROM routes
+DB --> Model: Return routes data
+Model --> Service: Return Route objects
+Service --> Controller: Return Route objects
+Controller --> View: Return routes JSON
+View -> View: Display routes in table
+
+' Add New Route
+Admin -> View: Click "Add Route"
+View -> View: Display route form
+Admin -> View: Enter route details
+View -> Controller: POST /api/routes
+Controller -> Service: createRoute(routeDTO)
+Service -> Service: Validate route data
+Service -> Model: save(route)
+Model -> DB: INSERT INTO routes ...
+DB --> Model: Return route ID
+Model --> Service: Return created Route
+Service --> Controller: Return Route object
+Controller --> View: Return success response
+View -> View: Update routes table
+View -> View: Show success toast
+
+' Edit Route
+Admin -> View: Click "Edit" on route
+View -> View: Display edit form with route data
+Admin -> View: Modify route details
+View -> Controller: PUT /api/routes/{id}
+Controller -> Service: updateRoute(id, routeDTO)
+Service -> Model: findById(id)
+Model -> DB: SELECT * FROM routes WHERE id = ?
+DB --> Model: Return route data
+Model --> Service: Return Route object
+Service -> Service: Update route properties
+Service -> Model: save(route)
+Model -> DB: UPDATE routes SET ... WHERE id = ?
+DB --> Model: Confirm update
+Model --> Service: Return updated Route
+Service --> Controller: Return Route object
+Controller --> View: Return success response
+View -> View: Update routes table
+View -> View: Show success toast
+
+' Delete Route
+Admin -> View: Click "Delete" on route
+View -> View: Display confirmation dialog
+Admin -> View: Confirm deletion
+View -> Controller: DELETE /api/routes/{id}
+Controller -> Service: deleteRoute(id)
+Service -> Model: delete(id)
+Model -> DB: DELETE FROM routes WHERE id = ?
+DB --> Model: Confirm deletion
+Model --> Service: Return success status
+Service --> Controller: Return success status
+Controller --> View: Return success response
+View -> View: Remove route from table
+View -> View: Show success toast
+
+' Similar for Manage Trains
+note over Admin, DB: Similar sequence for Train management
+
+' Manage Users
+Admin -> View: Navigate to /manage-users
+View -> Controller: GET /api/users
+Controller -> Service: getAllUsers()
+Service -> Model: findAll()
+Model -> DB: SELECT * FROM users
+DB --> Model: Return users data
+Model --> Service: Return User objects with passwords omitted
+Service --> Controller: Return User objects
+Controller --> View: Return users JSON
+View -> View: Display users in table
+
+' Toggle Admin Status
+Admin -> View: Click "Toggle Admin" on user
+View -> Controller: PUT /api/users/{id}/toggle-admin
+Controller -> Service: toggleAdminStatus(id)
+Service -> Model: findById(id)
+Model -> DB: SELECT * FROM users WHERE id = ?
+DB --> Model: Return user data
+Model --> Service: Return User object
+Service -> Service: Toggle isAdmin flag
+Service -> Model: save(user)
+Model -> DB: UPDATE users SET is_admin = ? WHERE id = ?
+DB --> Model: Confirm update
+Model --> Service: Return updated User
+Service --> Controller: Return User object
+Controller --> View: Return success response
+View -> View: Update user table
+View -> View: Show success toast
+
+' Delete User
+Admin -> View: Click "Delete" on user
+View -> View: Display confirmation dialog
+Admin -> View: Confirm deletion
+View -> Controller: DELETE /api/users/{id}
+Controller -> Service: deleteUser(id)
+Service -> Model: delete(id)
+Model -> DB: DELETE FROM users WHERE id = ?
+DB --> Model: Confirm deletion
+Model --> Service: Return success status
+Service --> Controller: Return success status
+Controller --> View: Return success response
+View -> View: Remove user from table
+View -> View: Show success toast
+
+@enduml

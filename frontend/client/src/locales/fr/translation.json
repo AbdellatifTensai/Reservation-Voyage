@@ -1,0 +1,127 @@
+{
+  "app": {
+    "name": "TrainEase",
+    "adminName": "TrainEase Admin",
+    "slogan": "Votre voyage, simplifié",
+    "tagline": "Votre voyage, simplifié"
+  },
+  "auth": {
+    "login": "Connexion",
+    "register": "S'inscrire",
+    "username": "Nom d'utilisateur",
+    "password": "Mot de passe",
+    "fullName": "Nom complet",
+    "confirmPassword": "Confirmer le mot de passe",
+    "rememberMe": "Se souvenir de moi",
+    "forgotPassword": "Mot de passe oublié ?",
+    "signIn": "Se connecter",
+    "signingIn": "Connexion en cours...",
+    "createAccount": "Créer un compte",
+    "creatingAccount": "Création du compte...",
+    "usernamePlaceholder": "Votre nom d'utilisateur",
+    "passwordPlaceholder": "Votre mot de passe",
+    "fullNamePlaceholder": "Jean Dupont",
+    "chooseUsernamePlaceholder": "Choisissez un nom d'utilisateur",
+    "confirmPasswordPlaceholder": "Confirmez votre mot de passe"
+  },
+  "nav": {
+    "dashboard": "Tableau de bord",
+    "findTickets": "Rechercher des billets",
+    "myBookings": "Mes réservations",
+    "manageTrains": "Gérer les trains",
+    "manageRoutes": "Gérer les itinéraires",
+    "manageUsers": "Gérer les utilisateurs",
+    "logout": "Déconnexion"
+  },
+  "findTickets": {
+    "title": "Rechercher des billets",
+    "searchHeader": "Recherchez votre prochain voyage",
+    "searchDescription": "Entrez vos villes de départ et de destination pour trouver les trains disponibles et réserver vos billets."
+  },
+  "trains": {
+    "searchFilters": "Filtres de recherche",
+    "origin": "Origine",
+    "destination": "Destination",
+    "date": "Date",
+    "search": "Rechercher",
+    "reset": "Réinitialiser",
+    "noTrains": "Aucun train trouvé pour les critères sélectionnés.",
+    "trainNumber": "Numéro de train",
+    "trainName": "Nom du train",
+    "departureTime": "Heure de départ",
+    "arrivalTime": "Heure d'arrivée",
+    "duration": "Durée",
+    "price": "Prix",
+    "actions": "Actions",
+    "book": "Réserver",
+    "hours": "heures",
+    "minutes": "minutes"
+  },
+  "bookings": {
+    "title": "Mes réservations",
+    "noBookings": "Vous n'avez pas encore de réservations.",
+    "bookingId": "ID de réservation",
+    "status": "Statut",
+    "date": "Date",
+    "route": "Itinéraire",
+    "train": "Train",
+    "departureTime": "Heure de départ",
+    "cancel": "Annuler",
+    "view": "Voir les détails",
+    "confirmCancel": "Êtes-vous sûr de vouloir annuler cette réservation ?",
+    "yes": "Oui, annuler",
+    "no": "Non, conserver"
+  },
+  "userDashboard": {
+    "title": "Tableau de bord utilisateur",
+    "welcomeBack": "Bienvenue à nouveau",
+    "upcomingTrips": "Voyages à venir",
+    "quickActions": "Actions rapides",
+    "findNewTicket": "Trouver un nouveau billet",
+    "viewBookings": "Voir mes réservations",
+    "editProfile": "Modifier le profil"
+  },
+  "adminDashboard": {
+    "title": "Tableau de bord administrateur",
+    "welcomeBack": "Bienvenue à nouveau",
+    "systemOverview": "Aperçu du système",
+    "totalUsers": "Nombre total d'utilisateurs",
+    "totalTrains": "Nombre total de trains",
+    "totalRoutes": "Nombre total d'itinéraires",
+    "totalBookings": "Nombre total de réservations",
+    "quickActions": "Actions rapides",
+    "manageTrains": "Gérer les trains",
+    "manageRoutes": "Gérer les itinéraires",
+    "manageUsers": "Gérer les utilisateurs"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "add": "Ajouter",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "noResults": "Aucun résultat trouvé",
+    "confirm": "Confirmer",
+    "success": "Succès",
+    "goBack": "Retour",
+    "continue": "Continuer"
+  },
+  "notFound": {
+    "title": "Page non trouvée",
+    "message": "La page que vous recherchez n'existe pas.",
+    "backHome": "Retour à l'accueil"
+  },
+  "language": {
+    "english": "Anglais",
+    "french": "Français"
+  },
+  "backendSelector": {
+    "title": "Sélection du backend",
+    "description": "Choisissez quelle implémentation de backend utiliser pour les requêtes API.",
+    "currentBackend": "Backend actuel"
+  }
+}

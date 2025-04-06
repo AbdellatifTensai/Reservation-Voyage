@@ -1,0 +1,40 @@
+pipeline:
+  agent:
+    docker:
+      image: maven:3.8.6-openjdk-17
+      
+  stages:
+    - name: Checkout
+      steps:
+        - checkout
+        
+    - name: Build & Test Java Backend
+      steps:
+        - shell: |
+            cd java-backend
+            mvn clean test
+        - junit:
+            path: java-backend/target/surefire-reports/*.xml
+        - jacoco:
+            path: java-backend/target/jacoco.exec
+            classDir: java-backend/target/classes
+            sourceDir: java-backend/src/main/java
+            
+    - name: Build JAR
+      condition: branch == 'main'
+      steps:
+        - shell: |
+            cd java-backend
+            mvn package -DskipTests
+        - archive:
+            artifacts: java-backend/target/*.jar
+            
+  notifications:
+    success:
+      - email:
+          recipients:
+            - team@trainease.com
+    failure:
+      - email:
+          recipients:
+            - team@trainease.com

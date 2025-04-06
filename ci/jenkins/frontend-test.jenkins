@@ -1,0 +1,75 @@
+pipeline {
+    agent any
+    
+    tools {
+        nodejs 'Node 18'
+    }
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        
+        stage('Install Dependencies') {
+            steps {
+                dir('client') {
+                    sh 'npm ci'
+                }
+            }
+        }
+        
+        stage('Run ESLint') {
+            steps {
+                dir('client') {
+                    sh 'npm run lint'
+                }
+            }
+        }
+        
+        stage('Run Unit Tests') {
+            steps {
+                dir('client') {
+                    sh 'npm run test:ci'
+                }
+            }
+            post {
+                always {
+                    junit 'client/junit.xml'
+                }
+            }
+        }
+        
+        stage('Generate Coverage Report') {
+            steps {
+                dir('client') {
+                    sh 'npm run test:coverage'
+                }
+            }
+            post {
+                success {
+                    publishHTML([
+                        allowMissing: false,
+                        alwaysLinkToLastBuild: true,
+                        keepAll: true,
+                        reportDir: 'client/coverage/lcov-report',
+                        reportFiles: 'index.html',
+                        reportName: 'Frontend Test Coverage'
+                    ])
+                }
+            }
+        }
+    }
+    
+    post {
+        success {
+            echo 'Frontend tests passed!'
+            slackSend(color: 'good', message: "Frontend tests PASSED: ${env.JOB_NAME} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+        }
+        failure {
+            echo 'Frontend tests failed!'
+            slackSend(color: 'danger', message: "Frontend tests FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+        }
+    }
+}

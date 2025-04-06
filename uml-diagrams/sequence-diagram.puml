@@ -1,0 +1,89 @@
+@startuml TrainEase Sequence Diagram - MVC Pattern
+
+' Style settings
+skinparam sequenceArrowThickness 2
+skinparam roundcorner 20
+skinparam sequenceParticipant underline
+
+' Participants in the MVC pattern
+actor "User" as User
+participant "React\nFrontend\n(View)" as View
+participant "HTTP Controller\n(Controller)" as Controller
+participant "Service Layer\n(Controller)" as Service
+participant "Entity/Repository\n(Model)" as Model
+database "Database" as DB
+
+' Booking a Train Ticket Sequence
+title Book a Train Ticket - MVC Pattern Sequence
+
+' Login and Authentication
+User -> View: Navigate to /auth
+View -> View: Display Login Form
+User -> View: Enter credentials
+View -> Controller: POST /api/login
+Controller -> Service: authenticate(username, password)
+Service -> Model: getUserByUsername(username)
+Model -> DB: SELECT * FROM users WHERE username = ?
+DB --> Model: Return user data
+Model --> Service: Return User object
+Service -> Service: Verify password
+Service --> Controller: Return authentication result
+Controller -> Controller: Create session
+Controller --> View: Return user data
+View -> View: Store user in AuthContext
+View -> View: Redirect to Dashboard
+
+' View Available Trains
+User -> View: Navigate to /find-tickets
+View -> Controller: GET /api/trains
+Controller -> Service: getAllTrains()
+Service -> Model: findAll()
+Model -> DB: SELECT * FROM trains
+DB --> Model: Return trains data
+Model --> Service: Return Train objects
+Service --> Controller: Return Train objects
+Controller --> View: Return trains JSON
+View -> View: Display trains in TrainList
+
+' View Available Routes
+View -> Controller: GET /api/routes
+Controller -> Service: getAllRoutes()
+Service -> Model: findAll()
+Model -> DB: SELECT * FROM routes
+DB --> Model: Return routes data
+Model --> Service: Return Route objects
+Service --> Controller: Return Route objects
+Controller --> View: Return routes JSON
+View -> View: Display routes with trains
+
+' Select Train and Route
+User -> View: Select train, route, date and seats
+View -> View: Navigate to payment page
+
+' Create Booking
+User -> View: Confirm booking
+View -> Controller: POST /api/bookings
+note right: DTO contains train, route, date, seats info
+Controller -> Service: createBooking(bookingDTO)
+Service -> Service: validateBooking(booking)
+Service -> Model: save(booking)
+Model -> DB: INSERT INTO bookings ...
+DB --> Model: Return booking ID
+Model --> Service: Return created Booking
+Service --> Controller: Return Booking object
+Controller --> View: Return booking confirmation
+View -> View: Display booking success
+
+' View Bookings
+User -> View: Navigate to /my-bookings
+View -> Controller: GET /api/bookings
+Controller -> Service: getBookingsByUser(userId)
+Service -> Model: findByUserId(userId)
+Model -> DB: SELECT * FROM bookings WHERE user_id = ?
+DB --> Model: Return bookings data
+Model --> Service: Return Booking objects
+Service --> Controller: Return Booking objects
+Controller --> View: Return bookings JSON
+View -> View: Display bookings in BookingList
+
+@enduml
