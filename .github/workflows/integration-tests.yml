@@ -13,11 +13,11 @@ jobs:
     
     services:
       postgres:
-        image: postgres:14
+        image: mysql
         env:
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_USER: postgres
-          POSTGRES_DB: trainease_test
+          MYSQL_PASSWORD: 
+          MYSQL_USER: root
+          MYSQL_DB: trainease_test
         ports:
           - 5432:5432
         options: >-
@@ -39,8 +39,8 @@ jobs:
     - name: Run integration tests
       env:
         DATABASE_URL: jdbc:mysql://localhost:5432/trainease_test
-        DATABASE_USERNAME: postgres
-        DATABASE_PASSWORD: postgres
+        DATABASE_USERNAME: root
+        DATABASE_PASSWORD:
       run: |
         cd java-backend
         mvn -B verify -P integration-test
